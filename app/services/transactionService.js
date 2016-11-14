@@ -52,127 +52,41 @@ exports.confirm = (hash, blockTimestamp) => {
 
 exports.getBuckets = () => {
   const buckets = {
-    0: {
-      count: 0,
-      totalBlocks: 0
-    },
-    10: {
-      count: 0,
-      totalBlocks: 0
-    },
-    20: {
-      count: 0,
-      totalBlocks: 0
-    },
-    30: {
-      count: 0,
-      totalBlocks: 0
-    },
-    40: {
-      count: 0,
-      totalBlocks: 0
-    },
-    50: {
-      count: 0,
-      totalBlocks: 0
-    },
-    60: {
-      count: 0,
-      totalBlocks: 0
-    },
-    70: {
-      count: 0,
-      totalBlocks: 0
-    },
-    80: {
-      count: 0,
-      totalBlocks: 0
-    },
-    90: {
-      count: 0,
-      totalBlocks: 0
-    },
-    100: {
-      count: 0,
-      totalBlocks: 0
-    },
-    over: {
-      count: 0,
-      totalBlocks: 0
-    }
   };
+  [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 'over'].forEach((bucket) => {
+    buckets[bucket] = {
+      count: 0,
+      totalBlocks: 0
+    };
+  });
   return db.models.transaction.findAsync().then((transactions) => { // queries not working properly
     transactions.forEach((transaction) => {
       if (transaction.block_count === -1 || transaction.timestamp < (+new Date() / 1000).toFixed(0) - SIX_HOURS) {
         return;
       }
-      if (transaction.spb === 0) {
-        buckets[0].count += 1;
-        buckets[0].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 10) {
-        buckets[10].count += 1;
-        buckets[10].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 20) {
-        buckets[20].count += 1;
-        buckets[20].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 30) {
-        buckets[30].count += 1;
-        buckets[30].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 40) {
-        buckets[40].count += 1;
-        buckets[40].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 50) {
-        buckets[50].count += 1;
-        buckets[50].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 60) {
-        buckets[60].count += 1;
-        buckets[60].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 70) {
-        buckets[70].count += 1;
-        buckets[70].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 80) {
-        buckets[80].count += 1;
-        buckets[80].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 90) {
-        buckets[90].count += 1;
-        buckets[90].totalBlocks += transaction.block_count;
-        return;
-      }
-
-      if (transaction.spb <= 100) {
-        buckets[100].count += 1;
-        buckets[100].totalBlocks += transaction.block_count;
-        return;
-      }
-      buckets.over.count += 1;
-      buckets.over.totalBlocks += transaction.block_count;
+      let selected = false;
+      [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 'over'].forEach((bucket) => {
+        if (selected) {
+          return false;
+        }
+        if (bucket === 0) {
+          if (transaction.spb === 0) {
+            buckets[bucket].count += 1;
+            buckets[bucket].totalBlocks += transaction.block_count;
+            selected = true;
+            return;
+          }
+        } else if (bucket === 'over') {
+          buckets[bucket].count += 1;
+          buckets[bucket].totalBlocks += transaction.block_count;
+        } else {
+          if (transaction.spb <= bucket) {
+            buckets[bucket].count += 1;
+            buckets[bucket].totalBlocks += transaction.block_count;
+            selected = true;
+          }
+        }
+      });
     });
     return buckets;
   });
