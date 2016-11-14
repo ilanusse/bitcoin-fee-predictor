@@ -1,0 +1,5 @@
+export BITCOIN_FEE_DB_HOST="localhost"
+export BITCOIN_FEE_DB_PORT="5432"
+export BITCOIN_FEE_DB_NAME="bitcoin-fee"
+export BITCOIN_FEE_DB_USERNAME="bitcoin-fee"
+export BITCOIN_FEE_DB_PASSWORD="bitcoin-fee"
