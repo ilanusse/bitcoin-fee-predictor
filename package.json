@@ -9,7 +9,6 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js \"**/*.js\"",
     "pretest": "npm run lint",
-    "prestart": "npm run lint",
     "start": "./node_modules/nodemon/bin/nodemon.js",
     "test": "NODE_ENV=testing ./node_modules/mocha/bin/mocha --compilers js:babel-core/register test/app.js"
   },
@@ -31,6 +30,7 @@
     "bitcore-p2p": "^1.1.0",
     "bluebird": "^3.4.6",
     "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
     "express": "^4.9.4",
     "morgan": "^1.7.0",
     "nodemon": "^1.9.0",
