@@ -19,7 +19,7 @@
     "comma-dangle": [2, "never"],                                 // http://eslint.org/docs/rules/comma-dangle
     "comma-spacing": [2, {"before": false, "after": true}],       // http://eslint.org/docs/rules/comma-spacing
     "comma-style": [2, "last"],                                   // http://eslint.org/docs/rules/comma-style
-    "complexity": [2, 6],                                         // http://eslint.org/docs/rules/complexity
+    "complexity": [0, 6],                                         // http://eslint.org/docs/rules/complexity
     "computed-property-spacing": [2, "never"],                    // http://eslint.org/docs/rules/computed-property-spacing
     "consistent-return": 0,                                       // http://eslint.org/docs/rules/consistent-return
     "consistent-this": [2, "that"],                               // http://eslint.org/docs/rules/consistent-this

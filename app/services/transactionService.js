@@ -103,7 +103,7 @@ exports.getBuckets = () => {
   };
   return db.models.transaction.findAsync().then((transactions) => { // queries not working properly
     transactions.forEach((transaction) => {
-      if (transaction.block_count == -1 || transaction.timestamp < (+new Date() / 1000).toFixed(0) - SIX_HOURS) {
+      if (transaction.block_count === -1 || transaction.timestamp < (+new Date() / 1000).toFixed(0) - SIX_HOURS) {
         return;
       }
       if (transaction.spb === 0) {
@@ -171,8 +171,8 @@ exports.getBuckets = () => {
         buckets[100].totalBlocks += transaction.block_count;
         return;
       }
-      buckets['over'].count += 1;
-      buckets['over'].totalBlocks += transaction.block_count;
+      buckets.over.count += 1;
+      buckets.over.totalBlocks += transaction.block_count;
     });
     return buckets;
   });
